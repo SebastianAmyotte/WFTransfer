@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "pvPhT/iHT5CJJGSjfnua4nV5P1zqpD1SV63VAFfSxbzgp8pvyIIHuT1J/aSL3LosJrghsOXXeLHdi73EBG9S7w==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Sebastian\\Desktop\\Save Transfer tool\\MTPAPI\\MTPAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Sebastian\\.nuget\\packages\\mediadevices\\1.10.0\\mediadevices.1.10.0.nupkg.sha512"
+  ],
+  "logs": []
+}
