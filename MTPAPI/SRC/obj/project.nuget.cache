@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vVPG3LVqsB0rFJKXlRRWbM/8vQJk8zjCRal+6xqUNutmD2alGYDv0VSViYsvAj4TD/kQ7s3oWuf54BnNfXdnVQ==",
+  "dgSpecHash": "bCWUO0iMcuMntkS4nFcuoc9gK+8Q832Lbcuujg5ddCceaAzK1HgYfKnUbjkaqrz72iXQRSegCRT95K9QE3J6+g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Sebastian\\Documents\\GitHub\\WFTransfer\\MTPAPI\\MTPAPI.csproj",
+  "projectFilePath": "C:\\Users\\Sebastian\\Documents\\GitHub\\WFTransfer\\MTPAPI\\SRC\\MTPAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Sebastian\\.nuget\\packages\\mediadevices\\1.10.0\\mediadevices.1.10.0.nupkg.sha512"
   ],

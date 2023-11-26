@@ -7,6 +7,8 @@ class AppTheme {
   // Backgrounds
   static var backgroundColor = const Color.fromARGB(255, 26, 28, 30);
   static var highlightBackgroundColor = const Color.fromARGB(255, 33, 36, 41);
+  static var activeColor = const Color.fromARGB(255, 21, 60, 92);
+  static var errorColor = const Color.fromARGB(255, 49, 27, 27);
 
   // Button
   static var buttonBackgroundColor = const Color.fromARGB(255, 61, 71, 81);
@@ -30,6 +32,9 @@ class AppTheme {
     backgroundColor:
         MaterialStateProperty.all(AppTheme.buttonBackgroundAlertColor),
   );
+  static var largeButtonStyleDisabled = largeButtonStyle.copyWith(
+    backgroundColor: MaterialStateProperty.all(errorColor),
+  );
   static var smallButtonStyle = TextButton.styleFrom(
     foregroundColor: buttonTextColor,
     backgroundColor: buttonBackgroundColor,
@@ -42,7 +47,7 @@ class AppTheme {
     ),
   );
   static var smallButtonStyleDisabled = smallButtonStyle.copyWith(
-    backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 49, 27, 27)),
+    backgroundColor: MaterialStateProperty.all(errorColor),
   );
 
   // Text
@@ -63,6 +68,11 @@ class AppTheme {
     color: textColorWhite,
     fontWeight: FontWeight.normal,
   );
+  static var subText = TextStyle(
+    fontSize: 14,
+    color: textColorWhite,
+    fontWeight: FontWeight.normal,
+  );
 
   // Overall app
   static var appSize = const Size(400, 700);
@@ -74,14 +84,11 @@ class AppTheme {
       "${Platform.environment['USERPROFILE']!}\\Documents\\WFSaves\\";
 
   static Widget highlightedWidget(Widget content, context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.0),
-            color: highlightBackgroundColor),
-        child: content,
-      ),
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+          color: highlightBackgroundColor),
+      child: content,
     );
   }
 
@@ -90,53 +97,92 @@ class AppTheme {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          highlightedWidget(
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                child: Text(
-                  'WF Transfer',
-                  style: titleText,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+            child: highlightedWidget(
+                Container(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      'WF Transfer',
+                      style: titleText,
+                    ),
+                  ),
                 ),
-              ),
-              context),
-          // To put the content in the middle of the screen
-          AnimatedSwitcher(
-            duration: const Duration(milliseconds: 250),
-            child: content,
+                context),
           ),
-          highlightedWidget(
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                    child: TextButton(
-                      onPressed: () {
-                        quit(context);
-                      },
-                      style: smallButtonStyle,
-                      child: const Text('Quit'),
-                    ),
+          // To put the content in the middle of the screen
+          Expanded(
+            child: AnimatedSwitcher(
+              // zoom in/out animation
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return ScaleTransition(
+                  scale: animation,
+                  child: child,
+                );
+              },
+              duration: const Duration(milliseconds: 100),
+              child: content,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+            child: highlightedWidget(
+                Container(
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      Text(
+                        "Selected device:",
+                        style: AppTheme.titleText,
+                      ),
+                      Text(
+                        Provider.of<DisplayChangeNotifier>(context).phoneName,
+                        style: AppTheme.subtitleText,
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                    child: TextButton(
-                      onPressed: () {
-                        if (!onMainPage(context)) {
-                          Provider.of<DisplayChangeNotifier>(context,
-                                  listen: false)
-                              .pop();
-                        }
-                      },
-                      style: onMainPage(context)
-                          ? smallButtonStyleDisabled
-                          : smallButtonStyle,
-                      child: const Text('Back'),
+                ),
+                context),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+            child: highlightedWidget(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                      child: TextButton(
+                        onPressed: () {
+                          quit(context);
+                        },
+                        style: smallButtonStyle,
+                        child: const Text('Quit'),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              context)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                      child: TextButton(
+                        onPressed: () {
+                          if (!onMainPage(context)) {
+                            Provider.of<DisplayChangeNotifier>(context,
+                                    listen: false)
+                                .pop();
+                          }
+                        },
+                        style: onMainPage(context)
+                            ? smallButtonStyleDisabled
+                            : smallButtonStyle,
+                        child: const Text('Back'),
+                      ),
+                    ),
+                  ],
+                ),
+                context),
+          )
         ],
       ),
     );
@@ -155,6 +201,12 @@ class AppTheme {
             .displayStack
             .length ==
         1;
+  }
+
+  static bool phoneSelected(context) {
+    return Provider.of<DisplayChangeNotifier>(context, listen: false)
+            .phoneName !=
+        "None";
   }
 
   static void quit(context) {
@@ -185,5 +237,30 @@ class AppTheme {
         );
       },
     );
+  }
+
+  static AlertDialog dialog(context, String title, String message) {
+    return AlertDialog(
+      backgroundColor: AppTheme.backgroundColor,
+      title: Text(
+        title,
+        style: AppTheme.titleText,
+      ),
+      content: Text(
+        message,
+        style: AppTheme.normalText,
+      ),
+      actions: [
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("OK", style: AppTheme.normalText))
+      ],
+    );
+  }
+
+  static String phoneDataDirectory() {
+    return "\\Internal storage\\Android\\data\\";
   }
 }

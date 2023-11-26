@@ -4,8 +4,9 @@ class Game {
   String mobileLocation;
   String img;
   String info;
+  List<String> folders;
   Game(this.name, this.desktopLocation, this.mobileLocation, this.img,
-      this.info);
+      this.folders, this.info);
 
   String describe() {
     return "$name, $desktopLocation, $mobileLocation, $img, $info";
@@ -29,5 +30,9 @@ class Game {
 
   String get getInfo {
     return info;
+  }
+
+  List<String> get getFolders {
+    return folders;
   }
 }

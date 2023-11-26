@@ -1,35 +1,34 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:wf_transfer/pages/phone_setup.dart';
 import 'package:wf_transfer/theme.dart';
 import 'help.dart';
 import 'package:provider/provider.dart';
 import 'package:wf_transfer/display_notifier.dart';
-import 'mobile_to_desktop.dart';
+import 'game_select.dart';
 
 class MainMenuPage extends StatelessWidget {
   const MainMenuPage({Key? key}) : super(key: key);
 
   @override
   Widget build(context) {
-    return Column(
+    return ListView(
       children: [
-        Padding(
-          padding: AppTheme.buttonPadding,
-          child: TextButton(
-            onPressed: () {},
-            style: AppTheme.largeButtonStyle,
-            child: const Text('Transfer to Mobile'),
-          ),
-        ),
         Padding(
           padding: AppTheme.buttonPadding,
           child: TextButton(
             onPressed: () {
               Provider.of<DisplayChangeNotifier>(context, listen: false)
-                  .push(const MobileToDesktop());
+                  .push(const GameSelect());
             },
-            style: AppTheme.largeButtonStyle,
-            child: const Text('Transfer to Desktop'),
+            style: AppTheme.phoneSelected(context)
+                ? AppTheme.largeButtonStyleAlert
+                : AppTheme.largeButtonStyle.copyWith(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        AppTheme.highlightBackgroundColor),
+                  ),
+            child: const Text('Select game'),
           ),
         ),
         Padding(
@@ -67,14 +66,8 @@ class MainMenuPage extends StatelessWidget {
   }
 
   ButtonStyle selectPhoneColor(context) {
-    return phoneSelected(context)
+    return AppTheme.phoneSelected(context)
         ? AppTheme.largeButtonStyle
         : AppTheme.largeButtonStyleAlert;
-  }
-
-  bool phoneSelected(context) {
-    return Provider.of<DisplayChangeNotifier>(context, listen: false)
-            .phoneName !=
-        "None";
   }
 }

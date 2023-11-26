@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MTPAPI
-build_property.ProjectDir = C:\Users\Sebastian\Documents\GitHub\WFTransfer\MTPAPI\
+build_property.ProjectDir = C:\Users\Sebastian\Documents\GitHub\WFTransfer\MTPAPI\SRC\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

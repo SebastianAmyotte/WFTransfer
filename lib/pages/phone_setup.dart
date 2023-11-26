@@ -29,7 +29,11 @@ class _PhoneSetupPage extends State<PhoneSetupPage> {
     if (_loading) {
       column.add(const LoadingWidget());
     } else {
-      column.add(Text("Detected devices:", style: AppTheme.subtitleText));
+      column.add(Text(
+        "Detected devices:",
+        style: AppTheme.subtitleText,
+        textAlign: TextAlign.center,
+      ));
       for (String phoneName in _phonesList) {
         column.add(createPhoneButton(phoneName, context));
       }
@@ -43,11 +47,9 @@ class _PhoneSetupPage extends State<PhoneSetupPage> {
           ),
         ),
       );
-      column.add(Text("Selected device:", style: AppTheme.subtitleText));
-      column.add(Text(Provider.of<DisplayChangeNotifier>(context).phoneName,
-          style: AppTheme.subtitleText));
     }
-    return Column(
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       children: column,
     );
   }
@@ -86,19 +88,10 @@ class _PhoneSetupPage extends State<PhoneSetupPage> {
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return AlertDialog(
-                backgroundColor: AppTheme.highlightBackgroundColor,
-                actionsAlignment: MainAxisAlignment.spaceAround,
-                actions: [
-                  TextButton(
-                    onPressed: () => {Navigator.of(context).pop()},
-                    child: Text("Ok", style: AppTheme.titleText),
-                  )
-                ],
-                title: Text(
-                  "Previously selected device has been disconnected and unselected.",
-                  style: AppTheme.normalText,
-                ),
+              return AppTheme.dialog(
+                context,
+                "Device disconnected",
+                "The previously selected device was not found. Please select a new device.",
               );
             },
           );

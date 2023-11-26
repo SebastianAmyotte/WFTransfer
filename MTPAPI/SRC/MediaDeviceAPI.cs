@@ -1,13 +1,13 @@
 using MediaDevices;
-
-
+using Microsoft.VisualBasic.FileIO;
 
 /// <summary>
 /// Class to handle the MediaDevice API
 /// Commands: 
-///     List: List all devices, and write them to file
-///     Read, Device, Source, Destination: Reads a file from the device
-///     Write, Device, Source, Destination: Writes a file to the device
+///     List:  List all devices, and write them to file
+///     Read:  Device, Source, Destination: Reads a file from the device
+///     Write: Device, Source, Destination: Writes a file to the device
+///     XFER:  Source, Destination: Copies a folder from one device to another
 /// </summary>
 class MediaDeviceAPI
 {
@@ -25,17 +25,26 @@ class MediaDeviceAPI
     }
 
     public MediaDeviceAPI(string[] args) {
-        checkDataFolderExists();
-        if (args[0] == Functions.LIST) {
-            writeDeviceList();
-        }
-        else if (args[0] == Functions.READ && args.Length == 4) {
-            readFromDevice(args[1], args[2], args[3]);
-        }
-        else if (args[0] == Functions.WRITE && args.Length == 4) {
-            writeToDevice(args[1], args[2], args[3]);
-        } else {
-            throw new Exception("Invalid arguments");
+        try {
+            checkDataFolderExists();
+            if (args[0] == Functions.LIST) {
+                writeDeviceList();
+            }
+            else if (args[0] == Functions.READ && args.Length == 4) {
+                readFromDevice(args[1], args[2], args[3]);
+            }
+            else if (args[0] == Functions.WRITE && args.Length == 4) {
+                writeToDevice(args[1], args[2], args[3]);
+            }
+            else if (args[0] == Functions.XFER && args.Length == 3) {
+                copyOnDevice(args[1], args[2]);
+            }
+            else {
+                throw new Exception("Invalid arguments");
+            }
+        } catch (Exception e) {
+            // Write error to disk
+            File.WriteAllText("e.txt", e.Message + " " + args[1]);
         }
     }
 
@@ -82,6 +91,13 @@ class MediaDeviceAPI
             throw new Exception ("Error writing to device: " + e.Message);
         }
         throw new Exception ("Error writing to device: Device not found");
+    }
+
+    void copyOnDevice(string source, string destination) {
+        FileSystem.CopyDirectory(
+            Environment.ExpandEnvironmentVariables(source),
+            Environment.ExpandEnvironmentVariables(destination)
+        );
     }
 
     /// <summary>

@@ -1,3 +1,3 @@
-name,desktop_location,mobile_location,img,info
-Peglin,AppData\LocalLow\Red Nexus Games Inc\Peglin,com.RedNexusGamesInc.Peglin\files,peglin.png,Peglin fully supported
-Slay the Spire,SteamLibrary\steamapps\common\SlayTheSpire,com.humble.SlayTheSpire\files,slaythespire.jpg,Doesn't support current run
+name,desktop_location,mobile_location,img,info,transfer
+Peglin,AppData\LocalLow\Red Nexus Games Inc\Peglin,com.RedNexusGamesInc.Peglin\files,peglin.png,Peglin fully supported,<ROOT>
+Slay the Spire,SteamLibrary\steamapps\common\SlayTheSpire,com.humble.SlayTheSpire\files,slaythespire.jpg,Doesn't support current run,preferences/runs/saves,

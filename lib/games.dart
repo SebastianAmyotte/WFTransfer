@@ -24,8 +24,14 @@ class Games {
         gamesFound = [];
         for (int i = 1; i < lines.length; i++) {
           List<String> gameInfo = lines[i].split(",");
-          gamesFound.add(Game(gameInfo[0], gameInfo[1], gameInfo[2],
-              gameInfo[3], gameInfo[4].replaceAll("\r", "")));
+          gamesFound.add(Game(
+            gameInfo[0],
+            gameInfo[1],
+            gameInfo[2],
+            gameInfo[3],
+            gameInfo[4].split("/"),
+            gameInfo[5].replaceAll("\r", ""),
+          ));
         }
       }
     } catch (e) {
