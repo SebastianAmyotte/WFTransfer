@@ -2,15 +2,22 @@
 
 Provides backup and transferring of games saves between Android and Windows devices.
 
+Optional internet access to update the internal database to provide up to date game rules.
+
+Use your own rules to add games not currently in the database.
+
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project has two internal projects that must both be built in order to function:
 
-A few resources to get you started if this is your first Flutter project:
+### Flutter project
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+A GUI wrapper for the MTP API that communicates with your Android device. 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+After compilation, make sure you include the '/default/' folder and it's contents inside the root of your final built program.
+
+Also make sure that the MTP API solution has been built and placed a folder named '/MTPAPI/' in the final built program directory.
+
+### MTPAPI
+
+Recommended to build using Visual Studio Code, requires MediaDevices package: https://www.nuget.org/packages/MediaDevices
