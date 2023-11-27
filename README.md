@@ -1,6 +1,6 @@
-# wf_transfer
+# WF Transfer
 
-A new Flutter project.
+Provides backup and transferring of games saves between Android and Windows devices.
 
 ## Getting Started
 
