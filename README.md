@@ -18,6 +18,12 @@ After compilation, make sure you include the '/default/' folder and it's content
 
 Also make sure that the MTP API solution has been built and placed a folder named '/MTPAPI/' in the final built program directory.
 
-### MTPAPI
+### MTPAPI - C# project
 
 Recommended to build using Visual Studio Code, requires MediaDevices package: https://www.nuget.org/packages/MediaDevices
+
+## Help
+
+Make sure your device is plugged in and unlocked, some devices will not accept MTP connections while the phone is locked. Try increasing your screen timeout in settings.
+
+Enable MTP or Mass storage after plugging in your device, check your notification panel for these settings.
