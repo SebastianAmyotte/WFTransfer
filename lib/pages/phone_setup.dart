@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:wf_transfer/theme.dart';
@@ -72,7 +71,7 @@ class _PhoneSetupPage extends State<PhoneSetupPage> {
     setState(() {
       _loading = true;
     });
-    scanExternal().then((result) {
+    Provider.of<DisplayChangeNotifier>(context).scanExternal().then((result) {
       setState(() {
         _loading = false;
         _phonesList = result;
@@ -98,19 +97,5 @@ class _PhoneSetupPage extends State<PhoneSetupPage> {
         }
       });
     });
-  }
-
-  Future<List<String>> scanExternal() async {
-    List<String> phones = ["No phones found"];
-    ProcessResult result = await Process.run('MTPAPI/MTPAPI.exe', ["LIST"]);
-    String fileDir =
-        "${Platform.environment['USERPROFILE']!}\\Documents\\WFSaves\\devices.txt";
-    File file = File(fileDir);
-    if (await file.exists()) {
-      String contents = await file.readAsString();
-      phones = contents.split("\n");
-      phones.removeLast();
-    }
-    return phones;
   }
 }

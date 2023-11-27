@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wf_transfer/pages/phone_setup.dart';
 import 'dart:io';
 import 'display_notifier.dart';
 import 'package:provider/provider.dart';
@@ -82,6 +83,14 @@ class AppTheme {
 
   static var datafolder =
       "${Platform.environment['USERPROFILE']!}\\Documents\\WFSaves\\";
+  static var imgfolder = "${datafolder}img\\";
+  static var savesFolder = "${datafolder}saves\\";
+  static List<String> folders = [datafolder, imgfolder, savesFolder];
+
+  static var dbName = "db.csv";
+  static var userDbName = "user_db.csv";
+  static var userSavePaths = "user_game_locations.csv";
+  static List<String> files = [dbName, userDbName, userSavePaths];
 
   static Widget highlightedWidget(Widget content, context) {
     return Container(
@@ -92,6 +101,24 @@ class AppTheme {
     );
   }
 
+  static Image diskImage(String filename) {
+    try {
+      File file = File("${AppTheme.datafolder}img\\$filename");
+      if (!file.existsSync()) {
+        throw Exception("File does not exist");
+      }
+      FileImage fileImage = FileImage(file);
+      return Image(
+          image: fileImage, fit: BoxFit.fitHeight, height: 50, width: 50);
+    } catch (e) {
+      return const Image(
+          image: AssetImage("assets/placeholder.png"),
+          fit: BoxFit.fitHeight,
+          height: 50,
+          width: 50);
+    }
+  }
+
   static Widget pageLayout(Widget content, context) {
     return Center(
       child: Column(
@@ -99,19 +126,25 @@ class AppTheme {
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-            child: highlightedWidget(
-                Container(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    child: Text(
-                      textAlign: TextAlign.center,
-                      'WF Transfer',
-                      style: titleText,
-                    ),
-                  ),
+            child: SizedBox(
+              width: 300,
+              child: TextButton(
+                onPressed: () {
+                  while (!onMainPage(context)) {
+                    Provider.of<DisplayChangeNotifier>(context, listen: false)
+                        .pop();
+                  }
+                },
+                style: largeButtonStyle.copyWith(
+                  backgroundColor:
+                      MaterialStateProperty.all(highlightBackgroundColor),
                 ),
-                context),
+                child: Text(
+                  'WF Transfer',
+                  style: titleText,
+                ),
+              ),
+            ),
           ),
           // To put the content in the middle of the screen
           Expanded(
@@ -128,24 +161,30 @@ class AppTheme {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-            child: highlightedWidget(
-                Container(
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      Text(
-                        "Selected device:",
-                        style: AppTheme.titleText,
-                      ),
-                      Text(
-                        Provider.of<DisplayChangeNotifier>(context).phoneName,
-                        style: AppTheme.subtitleText,
-                      ),
-                    ],
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+            child: SizedBox(
+              width: 300,
+              child: TextButton(
+                style: largeButtonStyle.copyWith(
+                  backgroundColor:
+                      MaterialStateProperty.all(highlightBackgroundColor),
+                ),
+                onPressed: () {
+                  if (!onPhoneSetupPage(context)) {
+                    Provider.of<DisplayChangeNotifier>(context, listen: false)
+                        .push(const PhoneSetupPage());
+                  }
+                },
+                child: SizedBox(
+                  width: 300,
+                  child: Text(
+                    "Selected device:\n${Provider.of<DisplayChangeNotifier>(context).phoneName}",
+                    style: AppTheme.normalText,
+                    textAlign: TextAlign.center,
                   ),
                 ),
-                context),
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
@@ -189,10 +228,6 @@ class AppTheme {
   }
 
   void backButton(context) {
-    String currentPage =
-        Provider.of<DisplayChangeNotifier>(context, listen: false)
-            .top
-            .toString();
     Provider.of<DisplayChangeNotifier>(context, listen: false).pop();
   }
 
@@ -201,6 +236,14 @@ class AppTheme {
             .displayStack
             .length ==
         1;
+  }
+
+  static bool onPhoneSetupPage(context) {
+    return Provider.of<DisplayChangeNotifier>(context, listen: false)
+            .displayStack
+            .last
+            .toString() ==
+        "PhoneSetupPage";
   }
 
   static bool phoneSelected(context) {

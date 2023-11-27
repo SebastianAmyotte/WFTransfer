@@ -14,7 +14,7 @@ class Games {
   }
 
   Future<List<Game>> readGamesFromDisk() async {
-    String fileDir = "${AppTheme.datafolder}${filename}.csv";
+    String fileDir = "${AppTheme.datafolder}$filename.csv";
     File file = File(fileDir);
     List<Game> gamesFound = [];
     try {

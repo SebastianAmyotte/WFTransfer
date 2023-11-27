@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wf_transfer/display_notifier.dart';
+import 'package:wf_transfer/pages/edit_game.dart';
 import 'package:wf_transfer/pages/transfer_setup.dart';
 import 'loading_widget.dart';
 import 'package:wf_transfer/theme.dart';
 import 'package:wf_transfer/game.dart';
-import 'dart:io';
 
 class GameSelect extends StatefulWidget {
   const GameSelect({Key? key}) : super(key: key);
 
   @override
-  _GameSelect createState() => _GameSelect();
+  State<GameSelect> createState() => _GameSelect();
 }
 
 class _GameSelect extends State<GameSelect> {
   bool _loaded = false;
+  Map<String, String> saveLocations = {};
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,18 @@ class _GameSelect extends State<GameSelect> {
 
   Widget createGameRow(Game game, context) {
     ListTile row = ListTile(
-      leading: diskImage(game.getImg),
+      trailing: SizedBox(
+        width: 50,
+        height: 50,
+        child: TextButton(
+          onPressed: () {
+            Provider.of<DisplayChangeNotifier>(context, listen: false)
+                .push(EditGame(game: game));
+          },
+          child: const Icon(Icons.edit),
+        ),
+      ),
+      leading: AppTheme.diskImage(game.getImg),
       title: Text(
         game.getName,
         style: AppTheme.normalText,
@@ -85,12 +97,5 @@ class _GameSelect extends State<GameSelect> {
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
       child: AppTheme.highlightedWidget(row, context),
     );
-  }
-
-  Image diskImage(String filename) {
-    FileImage fileImage =
-        FileImage(File("${AppTheme.datafolder}img\\$filename"));
-    return Image(
-        image: fileImage, fit: BoxFit.fitHeight, height: 50, width: 50);
   }
 }

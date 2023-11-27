@@ -20,4 +20,10 @@ class SaveData {
   String diskName() {
     return "${saveName}_${diskDate()}";
   }
+
+  set setName(String newName) {
+    savePath =
+        "${savePath.substring(0, savePath.length - diskName().length)}${newName}_${diskDate()}";
+    saveName = newName;
+  }
 }

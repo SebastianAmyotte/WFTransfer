@@ -14,7 +14,7 @@ class TransferSetup extends StatefulWidget {
   const TransferSetup({Key? key, required this.game}) : super(key: key);
 
   @override
-  _TransferSetup createState() => _TransferSetup();
+  State<TransferSetup> createState() => _TransferSetup();
 }
 
 class _TransferSetup extends State<TransferSetup> {
@@ -42,7 +42,7 @@ class _TransferSetup extends State<TransferSetup> {
     }
 
     List<Widget> column = [];
-    column.add(diskImage(game.img));
+    column.add(AppTheme.diskImage(game.img));
     for (SaveData save in saves) {
       column.add(ListTile(
         title: Text(
@@ -56,7 +56,6 @@ class _TransferSetup extends State<TransferSetup> {
             transfer: Transfer(
                 game,
                 save,
-                "$path\\${save.getName}_${save.diskDate()}\\",
                 "${AppTheme.phoneDataDirectory()}${game.getMobileLocation}\\",
                 game.desktopLocation),
           ));
@@ -68,7 +67,7 @@ class _TransferSetup extends State<TransferSetup> {
       child: TextButton(
         onPressed: () {
           // Get the information
-          String saveName = "NewSave";
+          String saveName = generateSaveName("desktop");
           DateTime saveDate = DateTime.now();
           SaveData saveData = SaveData(saveName, saveDate, path);
           // Transfer the save to the data folder
@@ -95,7 +94,40 @@ class _TransferSetup extends State<TransferSetup> {
     column.add(Padding(
       padding: AppTheme.buttonPadding,
       child: TextButton(
-        onPressed: () {},
+        onPressed: () {
+          String saveName = generateSaveName("mobile");
+          DateTime saveDate = DateTime.now();
+          SaveData saveData = SaveData(saveName, saveDate, path);
+          String phoneName =
+              Provider.of<DisplayChangeNotifier>(context, listen: false)
+                  .phoneName;
+          if (phoneName == "None") {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AppTheme.dialog(
+                    context, "No device", "Please connect a device");
+              },
+            );
+            return;
+          }
+          setState(() {
+            _waitingForCopy = true;
+          });
+          copyFromDevice(
+            game.folders,
+            phoneName,
+            game.mobileLocation,
+            "saves\\${game.name}\\${saveData.diskName()}",
+          ).then(
+            (value) {
+              setState(() {
+                _waitingForCopy = false;
+                _loading = true;
+              });
+            },
+          );
+        },
         style: AppTheme.largeButtonStyleAlert,
         child: const Text("Backup device save"),
       ),
@@ -105,11 +137,15 @@ class _TransferSetup extends State<TransferSetup> {
     );
   }
 
-  Image diskImage(String filename) {
-    FileImage fileImage =
-        FileImage(File("${AppTheme.datafolder}img\\$filename"));
-    return Image(
-        image: fileImage, fit: BoxFit.fitHeight, height: 150, width: 250);
+  String generateSaveName(String platform) {
+    // Get the information
+    String saveName = "New $platform save";
+    for (SaveData save in saves) {
+      if (save.getName == saveName) {
+        saveName = "New $platform save ${saves.length}";
+      }
+    }
+    return saveName;
   }
 
   Future<int> load(context) async {
@@ -147,6 +183,27 @@ class _TransferSetup extends State<TransferSetup> {
         'MTPAPI/MTPAPI.exe',
         [
           'XFER',
+          '$source$folder',
+          '$destination$folder',
+        ],
+      );
+    }
+  }
+
+  Future copyFromDevice(List<String> folders, String deviceName, String source,
+      String destination) async {
+    for (String folder in folders) {
+      if (folder == "ROOT") {
+        folder = "";
+      } else {
+        folder = "\\$folder";
+      }
+      // Copy the folder
+      await Process.run(
+        'MTPAPI/MTPAPI.exe',
+        [
+          'READ',
+          deviceName,
           '$source$folder',
           '$destination$folder',
         ],

@@ -19,7 +19,7 @@ class MediaDeviceAPI
     static void Main(string[] args) {
         if (args.Length == 0) {
             // debug args
-            args = new string[] { Functions.READ, "Sebastian's S22 Ultra", @"com.RedNexusGamesInc.Peglin\files", @"test"};
+            args = new string[] { Functions.WRITE, "Sebastian's S22 Ultra", @"C:\Users\Sebastian\Documents\WFSaves\saves\Peglin\Steam save_2023-11-26", @"\Internal storage\Android\data\com.RedNexusGamesInc.Peglin\files\"};
         }
         new MediaDeviceAPI(args);
     }
@@ -66,7 +66,9 @@ class MediaDeviceAPI
             foreach (var device in MediaDevice.GetDevices()) {
                 if (device.FriendlyName == deviceName) {
                     device.Connect();
-                    device.DownloadFolder(MOBILE_ROOT_PATH + path, HOST_ROOT_PATH + destination, true);
+                    
+                    //device.DownloadFolder(MOBILE_ROOT_PATH + path, HOST_ROOT_PATH + destination);
+                    device.DownloadFolder(MOBILE_ROOT_PATH + path, HOST_ROOT_PATH, true);
                     device.Disconnect();
                     return; // Early exit
                 }
@@ -82,7 +84,8 @@ class MediaDeviceAPI
             foreach (var device in MediaDevice.GetDevices()) {
                 if (device.FriendlyName == deviceName) {
                     device.Connect();
-                    device.UploadFolder(source, destination, true);
+                    device.DeleteDirectory(destination, true);
+                    //device.UploadFolder(source, destination, true);
                     device.Disconnect();
                     return; // Early exit
                 }

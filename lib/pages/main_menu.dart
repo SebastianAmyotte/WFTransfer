@@ -1,7 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:wf_transfer/pages/phone_setup.dart';
+import 'package:wf_transfer/pages/update_database.dart';
 import 'package:wf_transfer/theme.dart';
 import 'help.dart';
 import 'package:provider/provider.dart';
@@ -22,21 +21,8 @@ class MainMenuPage extends StatelessWidget {
               Provider.of<DisplayChangeNotifier>(context, listen: false)
                   .push(const GameSelect());
             },
-            style: AppTheme.phoneSelected(context)
-                ? AppTheme.largeButtonStyleAlert
-                : AppTheme.largeButtonStyle.copyWith(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        AppTheme.highlightBackgroundColor),
-                  ),
-            child: const Text('Select game'),
-          ),
-        ),
-        Padding(
-          padding: AppTheme.buttonPadding,
-          child: TextButton(
-            onPressed: () {},
             style: AppTheme.largeButtonStyle,
-            child: const Text('Edit games database'),
+            child: const Text('Games'),
           ),
         ),
         Padding(
@@ -59,6 +45,17 @@ class MainMenuPage extends StatelessWidget {
             },
             style: AppTheme.largeButtonStyle,
             child: const Text('Help'),
+          ),
+        ),
+        Padding(
+          padding: AppTheme.buttonPadding,
+          child: TextButton(
+            onPressed: () {
+              Provider.of<DisplayChangeNotifier>(context, listen: false)
+                  .push(const UpdateDatabase());
+            },
+            style: AppTheme.largeButtonStyle,
+            child: const Text('Update database'),
           ),
         ),
       ],
