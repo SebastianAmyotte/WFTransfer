@@ -6,13 +6,13 @@ Optional internet access to update the internal database to provide up to date g
 
 Use your own rules to add games not currently in the database.
 
-![image](https://github.com/SebastianAmyotte/WFTransfer/assets/71189225/63ff7821-1702-4fc4-ba39-7bc8ac022306)
+<img src="https://github.com/SebastianAmyotte/WFTransfer/assets/71189225/63ff7821-1702-4fc4-ba39-7bc8ac022306" width="250">
 
-![image](https://github.com/SebastianAmyotte/WFTransfer/assets/71189225/25bf9b25-2a9b-403f-94ed-5b918857f6e2)
+<img src="https://github.com/SebastianAmyotte/WFTransfer/assets/71189225/25bf9b25-2a9b-403f-94ed-5b918857f6e2" width="250">
 
-![image](https://github.com/SebastianAmyotte/WFTransfer/assets/71189225/0b81716c-392c-461c-a70e-939c2cee164d)
+<img src="https://github.com/SebastianAmyotte/WFTransfer/assets/71189225/0b81716c-392c-461c-a70e-939c2cee164d" width="250">
 
-![image](https://github.com/SebastianAmyotte/WFTransfer/assets/71189225/634a3bb0-92f7-468d-a27d-59de81cb9ab6)
+<img src="https://github.com/SebastianAmyotte/WFTransfer/assets/71189225/634a3bb0-92f7-468d-a27d-59de81cb9ab6" width="250">
 
 
 ## Getting Started
