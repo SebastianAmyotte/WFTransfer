@@ -6,15 +6,6 @@ Optional internet access to update the internal database to provide up to date g
 
 Use your own rules to add games not currently in the database.
 
-<img src="https://github.com/SebastianAmyotte/WFTransfer/assets/71189225/63ff7821-1702-4fc4-ba39-7bc8ac022306" width="300">
-
-<img src="https://github.com/SebastianAmyotte/WFTransfer/assets/71189225/25bf9b25-2a9b-403f-94ed-5b918857f6e2" width="300">
-
-<img src="https://github.com/SebastianAmyotte/WFTransfer/assets/71189225/0b81716c-392c-461c-a70e-939c2cee164d" width="300">
-
-<img src="https://github.com/SebastianAmyotte/WFTransfer/assets/71189225/634a3bb0-92f7-468d-a27d-59de81cb9ab6" width="300">
-
-
 ## Getting Started
 
 This project has two internal projects that must both be built in order to function:
@@ -36,6 +27,16 @@ Recommended to build using Visual Studio Code, requires MediaDevices package: ht
 Make sure your device is plugged in and unlocked, some devices will not accept MTP connections while the phone is locked. Try increasing your screen timeout in settings.
 
 Enable MTP or Mass storage after plugging in your device, check your notification panel for these settings.
+
+## Application preview
+
+<img src="https://github.com/SebastianAmyotte/WFTransfer/assets/71189225/63ff7821-1702-4fc4-ba39-7bc8ac022306" width="300">
+
+<img src="https://github.com/SebastianAmyotte/WFTransfer/assets/71189225/25bf9b25-2a9b-403f-94ed-5b918857f6e2" width="300">
+
+<img src="https://github.com/SebastianAmyotte/WFTransfer/assets/71189225/0b81716c-392c-461c-a70e-939c2cee164d" width="300">
+
+<img src="https://github.com/SebastianAmyotte/WFTransfer/assets/71189225/634a3bb0-92f7-468d-a27d-59de81cb9ab6" width="300">
 
 ## Todo:
 
