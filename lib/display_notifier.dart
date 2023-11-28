@@ -115,7 +115,7 @@ class DisplayChangeNotifier extends ChangeNotifier {
 
   Future<List<String>> scanExternal() async {
     List<String> phones = ["No phones found"];
-    await Process.run('MTPAPI/MTPAPI.exe', ["LIST"]);
+    await Process.start('MTPAPI/MTPAPI.exe', ["LIST"]);
     String fileDir =
         "${Platform.environment['USERPROFILE']!}\\Documents\\WFSaves\\devices.txt";
     File file = File(fileDir);

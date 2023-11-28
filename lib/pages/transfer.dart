@@ -329,21 +329,43 @@ class _TransferPage extends State<TransferPage> {
 
   //TODO
   Future transferToPhone() async {
-    await Process.run('MTPAPI/MTPAPI.exe', [
+    var r = await Process.start('MTPAPI/MTPAPI.exe', [
       'WRITE',
       Provider.of<DisplayChangeNotifier>(context, listen: false).phoneName,
       transfer.save.savePath,
       transfer.destinationMobile,
     ]);
+    var exitCode = await r.exitCode;
+    if (exitCode == -1) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AppTheme.dialog(context, "Error",
+              "An error occurred while transferring the save. Please try again.");
+        },
+      );
+    }
   }
 
   //TODO
   Future transferToDesktop() async {
-    await Process.run('MTPAPI/MTPAPI.exe', [
+    var r = await Process.start('MTPAPI/MTPAPI.exe', [
       'XFER',
       transfer.save.savePath,
       transfer.destinationComputer,
     ]);
+    var exitCode = await r.exitCode;
+    if (exitCode == -1) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AppTheme.dialog(context, "Error",
+              "An error occurred while transferring the save. Please try again.");
+        },
+      );
+    }
   }
 }
 

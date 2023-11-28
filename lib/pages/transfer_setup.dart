@@ -179,7 +179,7 @@ class _TransferSetup extends State<TransferSetup> {
         folder = "\\$folder";
       }
       // Copy the folder
-      await Process.run(
+      var r = await Process.start(
         'MTPAPI/MTPAPI.exe',
         [
           'XFER',
@@ -187,6 +187,17 @@ class _TransferSetup extends State<TransferSetup> {
           '$destination$folder',
         ],
       );
+      var exitCode = await r.exitCode;
+      if (exitCode == -1) {
+        // ignore: use_build_context_synchronously
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AppTheme.dialog(context, "Error",
+                "An error occurred while transferring the save. Please try again.");
+          },
+        );
+      }
     }
   }
 
@@ -199,7 +210,7 @@ class _TransferSetup extends State<TransferSetup> {
         folder = "\\$folder";
       }
       // Copy the folder
-      await Process.run(
+      var r = await Process.start(
         'MTPAPI/MTPAPI.exe',
         [
           'READ',
@@ -208,6 +219,17 @@ class _TransferSetup extends State<TransferSetup> {
           '$destination$folder',
         ],
       );
+      var exitCode = await r.exitCode;
+      if (exitCode == -1) {
+        // ignore: use_build_context_synchronously
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AppTheme.dialog(context, "Error",
+                "An error occurred while transferring the save. Please try again.");
+          },
+        );
+      }
     }
   }
 }

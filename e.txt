@@ -1,1 +1,1 @@
-Error writing to device: File \Internal storage\Android\data\com.RedNexusGamesInc.Peglin\files\I2Source_I2Languages1xgT3rUQAiqdwaVs1ug7A4iAQaJEtao-nITl4sq8nvIs.loc already exists Sebastian's S22 Ultra
+Error writing to device: Error HRESULT E_FAIL has been returned from a call to a COM component. Sebastian's S22 Ultra

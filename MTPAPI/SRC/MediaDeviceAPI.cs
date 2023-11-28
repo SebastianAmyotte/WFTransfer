@@ -19,7 +19,7 @@ class MediaDeviceAPI
     static void Main(string[] args) {
         if (args.Length == 0) {
             // debug args
-            args = new string[] { Functions.WRITE, "Sebastian's S22 Ultra", @"C:\Users\Sebastian\Documents\WFSaves\saves\Peglin\Steam save_2023-11-26", @"\Internal storage\Android\data\com.RedNexusGamesInc.Peglin\files\"};
+            args = new string[] { Functions.WRITE, "Sebastian's S22 Ultra", @"C:\Users\Sebastian\Documents\WFSaves\saves\Peglin\Mobile save_2023-11-26", @"\Internal storage\Android\data\com.RedNexusGamesInc.Peglin\files\"};
         }
         new MediaDeviceAPI(args);
     }
@@ -45,7 +45,9 @@ class MediaDeviceAPI
         } catch (Exception e) {
             // Write error to disk
             File.WriteAllText("e.txt", e.Message + " " + args[1]);
+            Environment.Exit(-1);
         }
+        Environment.Exit(0);
     }
 
     /// <summary>
@@ -66,9 +68,7 @@ class MediaDeviceAPI
             foreach (var device in MediaDevice.GetDevices()) {
                 if (device.FriendlyName == deviceName) {
                     device.Connect();
-                    
-                    //device.DownloadFolder(MOBILE_ROOT_PATH + path, HOST_ROOT_PATH + destination);
-                    device.DownloadFolder(MOBILE_ROOT_PATH + path, HOST_ROOT_PATH, true);
+                    device.DownloadFolder(MOBILE_ROOT_PATH + path, HOST_ROOT_PATH + destination, true);
                     device.Disconnect();
                     return; // Early exit
                 }
@@ -84,8 +84,11 @@ class MediaDeviceAPI
             foreach (var device in MediaDevice.GetDevices()) {
                 if (device.FriendlyName == deviceName) {
                     device.Connect();
-                    device.DeleteDirectory(destination, true);
-                    //device.UploadFolder(source, destination, true);
+                    var files = device.EnumerateFiles(destination);
+                    foreach (var file in files) {
+                        device.DeleteFile(file);
+                    }
+                    device.UploadFolder(source, destination, false);
                     device.Disconnect();
                     return; // Early exit
                 }
@@ -99,7 +102,8 @@ class MediaDeviceAPI
     void copyOnDevice(string source, string destination) {
         FileSystem.CopyDirectory(
             Environment.ExpandEnvironmentVariables(source),
-            Environment.ExpandEnvironmentVariables(destination)
+            Environment.ExpandEnvironmentVariables(destination),
+            true
         );
     }
 

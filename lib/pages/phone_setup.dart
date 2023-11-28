@@ -67,11 +67,13 @@ class _PhoneSetupPage extends State<PhoneSetupPage> {
     );
   }
 
-  void scanForPhones(context) {
+  void scanForPhones(context) async {
     setState(() {
       _loading = true;
     });
-    Provider.of<DisplayChangeNotifier>(context).scanExternal().then((result) {
+    Provider.of<DisplayChangeNotifier>(context, listen: false)
+        .scanExternal()
+        .then((result) {
       setState(() {
         _loading = false;
         _phonesList = result;

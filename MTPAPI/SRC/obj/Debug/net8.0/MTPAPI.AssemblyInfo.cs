@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MTPAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6cee1bf34d2d879faee1ffe91f17e75f1ff52e43")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("MTPAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MTPAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
