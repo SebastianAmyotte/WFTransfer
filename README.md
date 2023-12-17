@@ -12,15 +12,11 @@ This project has two internal projects that must both be built in order to funct
 
 ### Flutter project
 
-A GUI wrapper for the MTP API that communicates with your Android device. 
+A GUI wrapper for ADB that communicates with your Android device. 
 
-After compilation, make sure you include the '/default/' folder and it's contents inside the root of your final built program.
+### ADB tools required
 
-Also make sure that the MTP API solution has been built and placed a folder named '/MTPAPI/' in the final built program directory.
-
-### MTPAPI - C# project
-
-Recommended to build using Visual Studio Code, requires MediaDevices package: https://www.nuget.org/packages/MediaDevices
+TODO
 
 ## Help
 

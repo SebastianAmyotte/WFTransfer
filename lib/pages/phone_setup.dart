@@ -59,7 +59,7 @@ class _PhoneSetupPage extends State<PhoneSetupPage> {
       child: TextButton(
         onPressed: () {
           Provider.of<DisplayChangeNotifier>(context, listen: false).setPhone =
-              phoneName;
+              phoneName.split(" / ")[0];
         },
         style: AppTheme.largeButtonStyle,
         child: Text(phoneName),

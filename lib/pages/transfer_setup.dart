@@ -74,7 +74,7 @@ class _TransferSetup extends State<TransferSetup> {
           setState(() {
             _waitingForCopy = true;
           });
-          copyFolders(
+          copyFromDesktop(
             game.folders,
             game.desktopLocation,
             "$path\\${saveData.diskName()}",
@@ -114,7 +114,7 @@ class _TransferSetup extends State<TransferSetup> {
           setState(() {
             _waitingForCopy = true;
           });
-          copyFromDevice(
+          copyFromMobile(
             game.folders,
             phoneName,
             game.mobileLocation,
@@ -170,66 +170,35 @@ class _TransferSetup extends State<TransferSetup> {
     return saveFolder.length;
   }
 
-  Future copyFolders(
+  Future copyFromDesktop(
       List<String> folders, String source, String destination) async {
-    for (String folder in folders) {
-      if (folder == "ROOT") {
-        folder = "";
-      } else {
-        folder = "\\$folder";
-      }
-      // Copy the folder
-      var r = await Process.start(
-        'MTPAPI/MTPAPI.exe',
-        [
-          'XFER',
-          '$source$folder',
-          '$destination$folder',
-        ],
+    // TODO
+    var exitCode = -1;
+    if (exitCode == -1) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AppTheme.dialog(context, "Error",
+              "An error occurred while transferring the save. Please try again.");
+        },
       );
-      var exitCode = await r.exitCode;
-      if (exitCode == -1) {
-        // ignore: use_build_context_synchronously
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AppTheme.dialog(context, "Error",
-                "An error occurred while transferring the save. Please try again.");
-          },
-        );
-      }
     }
   }
 
-  Future copyFromDevice(List<String> folders, String deviceName, String source,
+  Future copyFromMobile(List<String> folders, String deviceName, String source,
       String destination) async {
-    for (String folder in folders) {
-      if (folder == "ROOT") {
-        folder = "";
-      } else {
-        folder = "\\$folder";
-      }
-      // Copy the folder
-      var r = await Process.start(
-        'MTPAPI/MTPAPI.exe',
-        [
-          'READ',
-          deviceName,
-          '$source$folder',
-          '$destination$folder',
-        ],
+    // TODO
+    var exitCode = -1;
+    if (exitCode == -1) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AppTheme.dialog(context, "Error",
+              "An error occurred while transferring the save. Please try again.");
+        },
       );
-      var exitCode = await r.exitCode;
-      if (exitCode == -1) {
-        // ignore: use_build_context_synchronously
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AppTheme.dialog(context, "Error",
-                "An error occurred while transferring the save. Please try again.");
-          },
-        );
-      }
     }
   }
 }

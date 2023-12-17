@@ -4,6 +4,7 @@ import 'package:wf_transfer/pages/main_menu.dart';
 import 'package:wf_transfer/theme.dart';
 import 'dart:io';
 import 'games.dart';
+import 'adb.dart';
 
 class DisplayChangeNotifier extends ChangeNotifier {
   List<Widget> _displayStack = [];
@@ -115,15 +116,7 @@ class DisplayChangeNotifier extends ChangeNotifier {
 
   Future<List<String>> scanExternal() async {
     List<String> phones = ["No phones found"];
-    await Process.start('MTPAPI/MTPAPI.exe', ["LIST"]);
-    String fileDir =
-        "${Platform.environment['USERPROFILE']!}\\Documents\\WFSaves\\devices.txt";
-    File file = File(fileDir);
-    if (await file.exists()) {
-      String contents = await file.readAsString();
-      phones = contents.split("\n");
-      phones.removeLast();
-    }
+    phones = await ADB().detectDevice();
     return phones;
   }
 }

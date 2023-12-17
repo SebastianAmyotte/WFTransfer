@@ -13,7 +13,7 @@ class HelpPage extends StatelessWidget {
           style: AppTheme.titleText,
         ),
         Text(
-          "Lmao figure it out idiot",
+          "Help page coming soon",
           style: AppTheme.titleText,
         ),
       ],

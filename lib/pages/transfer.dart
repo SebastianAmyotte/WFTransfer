@@ -329,13 +329,10 @@ class _TransferPage extends State<TransferPage> {
 
   //TODO
   Future transferToPhone() async {
-    var r = await Process.start('MTPAPI/MTPAPI.exe', [
-      'WRITE',
-      Provider.of<DisplayChangeNotifier>(context, listen: false).phoneName,
-      transfer.save.savePath,
-      transfer.destinationMobile,
-    ]);
-    var exitCode = await r.exitCode;
+    // Provider.of<DisplayChangeNotifier>(context, listen: false).phoneName; //Phone name
+    // transfer.save.savePath; // Save path
+    // transfer.destinationMobile; // destination path
+    var exitCode = -1;
     if (exitCode == -1) {
       // ignore: use_build_context_synchronously
       showDialog(
@@ -350,12 +347,7 @@ class _TransferPage extends State<TransferPage> {
 
   //TODO
   Future transferToDesktop() async {
-    var r = await Process.start('MTPAPI/MTPAPI.exe', [
-      'XFER',
-      transfer.save.savePath,
-      transfer.destinationComputer,
-    ]);
-    var exitCode = await r.exitCode;
+    var exitCode = -1;
     if (exitCode == -1) {
       // ignore: use_build_context_synchronously
       showDialog(

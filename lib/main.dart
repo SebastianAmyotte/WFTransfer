@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'adb.dart';
 import 'package:flutter/material.dart';
 import 'package:wf_transfer/display_notifier.dart';
 import 'theme.dart';
@@ -130,16 +130,13 @@ class _DisplayWrapper extends State<DisplayWrapper> {
   }
 
   Future checkFiles() async {
-    // Check the WF folder exists
+    setUSBMode();
+    // Check the WF folder and subfolders exists
     for (String folder in AppTheme.folders) {
       if (!Directory(folder).existsSync()) {
         if (folder.contains('\\img\\')) {
           // Transfer all the images from the install folder
-          Process.run('MTPAPI/MTPAPI.exe', [
-            'XFER',
-            '${Directory.current.path}\\default\\img\\',
-            '${AppTheme.datafolder}img\\',
-          ]);
+          // TODO
         } else {
           Directory(folder).createSync(recursive: true);
         }
@@ -155,5 +152,9 @@ class _DisplayWrapper extends State<DisplayWrapper> {
         }
       }
     }
+  }
+
+  void setUSBMode() {
+    //ADB().setUSBMode(true);
   }
 }
