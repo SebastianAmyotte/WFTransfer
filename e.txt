@@ -1,1 +1,0 @@
-Error writing to device: Error HRESULT E_FAIL has been returned from a call to a COM component. Sebastian's S22 Ultra
